@@ -33,9 +33,9 @@ jobs:
               uses: actions/checkout@v4
               
            
-            - name: configure jfrog environment
-              run: |
-                jf pip-config --repo-resolve=$RESOLVE_REPO
+#            - name: configure jfrog environment
+#              run: |
+#                jf pip-config --repo-resolve=$RESOLVE_REPO
                 
             - name: configure environment
               run: |                      
@@ -46,7 +46,7 @@ jobs:
                 
             - name: build project
               run: |                      
-                jf pip install -r requirements.txt  --module=jfrog-python-example
+                pip install -r requirements.txt  --module=jfrog-python-example
                 python setup.py sdist bdist_wheel
                 cd dist && echo "hashes=$(sha256sum * | base64 -w0)" >> $GITHUB_OUTPUT
 
