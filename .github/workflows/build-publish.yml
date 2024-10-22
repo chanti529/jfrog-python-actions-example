@@ -1,5 +1,5 @@
 name: Sample Python GitHub
-on: workflow_dispatch
+on: push
 
 permissions:
   actions: read # for detecting the Github Actions environment.
