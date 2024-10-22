@@ -34,7 +34,7 @@ jobs:
            
             - name: configure jfrog environment
               run: |
-                jf pip-config --repo-resolve=$RESOLVE_REPO
+                jf pip-config --global=true --repo-resolve=$RESOLVE_REPO
                 
             - name: configure environment
               run: |                      
@@ -51,6 +51,7 @@ jobs:
 
             - name: publish python package
               run: |
+                #jf rt u dist/ $PLATFORM_REPO/example-projects/ --module=jfrog-python-example
                 jf rt u dist/ $PLATFORM_REPO/example-projects/ --module=jfrog-python-example
 
             - name: Set up Docker Buildx
