@@ -27,7 +27,7 @@ jobs:
                 JF_URL: https://${{ vars.JF_URL }}/
                 JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }} 
                 # Required for uploading code scanning.
-                JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                JF_GIT_TOKEN: ${{ secrets.JF_GIT_TOKEN }}
                   
             - name: Checkout the repository    
               uses: actions/checkout@v4
@@ -72,10 +72,10 @@ jobs:
                 tags: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}     
                 
                         
- #           - name: docker scan
- #             run: |  
- #                jf docker pull ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
- #                jf docker scan ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
+            - name: docker scan
+              run: |  
+                 jf docker pull ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
+                 jf docker scan ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
 
             - name: add docker package to build
               run: |  
