@@ -11,7 +11,9 @@ jobs:
     build-publish-python:
         runs-on: ubuntu-latest
         env:
-          DOCKER_REPO: 'docker-npmbuildtests-local'
+          PLATFORM_REPO: 'pypi-buildtests-remote'
+          RESOLVE_REPO: 'pypi-buildtests-remote'
+          DOCKER_REPO: 'docker-pypibuildtests-local'
           IMAGE_NAME: 'python-test-image-gh'
         outputs:
           image: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
@@ -31,9 +33,9 @@ jobs:
               uses: actions/checkout@v4
               
            
-            - name: configure jfrog environment
-              run: |
-                jf pip-config --repo-resolve=pypi-buildtests-remote
+#            - name: configure jfrog environment
+#              run: |
+#                jf pip-config --repo-resolve=$RESOLVE_REPO
                 
             - name: configure environment
               run: |                      
@@ -50,7 +52,7 @@ jobs:
 
             - name: publish python package
               run: |
-                jf rt u dist/ python-virtual/example-projects/ --module=jfrog-python-example
+                jf rt u dist/ $PLATFORM_REPO/example-projects/ --module=jfrog-python-example
 
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3    
