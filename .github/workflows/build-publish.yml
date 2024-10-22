@@ -16,7 +16,7 @@ jobs:
           DOCKER_REPO: 'docker-pypibuildtests-local'
           IMAGE_NAME: 'python-test-image-gh'
         outputs:
-          image: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
+          image: $JF_URL/$DOCKER_REPO/$IMAGE_NAME
           digest: ${{ steps.build.outputs.digest }}
         steps:
             # Download the JFrog CLI and configure using JFrog Project and OIDC provider 
@@ -26,6 +26,8 @@ jobs:
               env:
                 JF_URL: https://${{ vars.JF_URL }}/
                 JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
+                # JF_USER is used for basic authentication to docker repositories
+                JF_USER: ${{ vars.JF_USER }}
               with:
                 version: latest
                   
@@ -34,7 +36,7 @@ jobs:
            
             - name: configure jfrog environment
               run: |
-                jf pip-config --repo-resolve=${{ env.RESOLVE_REPO }}
+                jf pip-config --repo-resolve=$RESOLVE_REPO
                 
             - name: configure environment
               run: |                      
@@ -51,7 +53,7 @@ jobs:
 
             - name: publish python package
               run: |
-                jf rt u dist/ ${{ env.PLATFORM_REPO }}/example-projects/ --module=jfrog-python-example
+                jf rt u dist/ $PLATFORM_REPO/example-projects/ --module=jfrog-python-example
                 
             - name: Set up Docker Buildx
               uses: docker/setup-buildx-action@v3    
@@ -59,9 +61,10 @@ jobs:
             - name: Authenticate Docker
               uses: docker/login-action@v3
               with:
-                registry: ${{ vars.JF_URL }}
-                username: ${{ vars.JF_USER }}
-                password: ${{ secrets.JF_ACCESS_TOKEN }}
+                registry: $JF_URL
+                # Basic auth with token
+                username: $JF_USER
+                password: $JF_ACCESS_TOKEN
     
             - name: Build Docker image    
               uses: docker/build-push-action@v5
@@ -69,12 +72,17 @@ jobs:
               with:
                 push: true
                 platforms: linux/amd64 #, linux/arm64
-                tags: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}     
+                tags: $JF_URL/$DOCKER_REPO/$IMAGE_NAME
+                        
+            - name: docker scan
+              run: |  
+                 jf docker pull $JF_URL/$DOCKER_REPO/$IMAGE_NAME
+                 jf docker scan $JF_URL/$DOCKER_REPO/$IMAGE_NAME
 
             - name: add docker package to build
               run: |  
-                 echo "${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}" > metadata.json
-                 jf rt build-docker-create ${{ env.DOCKER_REPO }} --image-file metadata.json 
+                 echo "$JF_URL/$DOCKER_REPO/$IMAGE_NAME@${{ steps.build.outputs.digest }}" > metadata.json
+                 jf rt build-docker-create $DOCKER_REPO --image-file metadata.json 
                  
             - name: publish build info
               run: |
@@ -93,5 +101,5 @@ jobs:
         digest: ${{ needs.build-publish-python.outputs.digest }}
         private-repository: true
       secrets:
-        registry-username: ${{ vars.JF_USER }}
-        registry-password: ${{ secrets.JF_ACCESS_TOKEN }}
+        registry-username: $JF_USER
+        registry-password: $JF_ACCESS_TOKEN
