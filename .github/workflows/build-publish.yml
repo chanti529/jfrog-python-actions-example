@@ -24,7 +24,7 @@ jobs:
               name: Setup JFrog CLI
               id: setup-cli
               env:
-                JF_URL: https://${{ vars.JF_URL }}/
+                JF_URL: https://${{ vars.JF_URL }}
                 JF_ACCESS_TOKEN: ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }} 
                 # Required for uploading code scanning.
                 JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -34,7 +34,7 @@ jobs:
            
             - name: configure jfrog environment
               run: |
-                jf pip-config --global=true --repo-resolve=$RESOLVE_REPO --repo-deploy=$PLATFORM_REPO
+                jf pip-config --global=true --repo-resolve=$RESOLVE_REPO
                 
             - name: configure environment
               run: |                      
