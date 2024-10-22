@@ -25,7 +25,6 @@ jobs:
               id: setup-cli
               env:
                 JF_URL: https://${{ vars.JF_URL }}/
-                JF_USER: ${{ vars.JF_USER }}
                 JF_ACCESS_TOKEN: ${{ secrets.ARTIFACTORY_ACCESS_TOKEN }} 
                 # Required for uploading code scanning.
                 JF_GIT_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -61,7 +60,7 @@ jobs:
               uses: docker/login-action@v3
               with:
                 registry: ${{ vars.JF_URL }}
-                username: ${{ vars.JF_USER }}
+                username: matt
                 password: ${{ secrets.JF_ACCESS_TOKEN }}
     
                 
