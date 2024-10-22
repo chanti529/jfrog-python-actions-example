@@ -11,7 +11,7 @@ jobs:
     build-publish-python:
         runs-on: ubuntu-latest
         env:
-          PLATFORM_REPO: 'pypi-buildtests-remote'
+          PLATFORM_REPO: 'pypi-buildtests-local'
           RESOLVE_REPO: 'pypi-buildtests-remote'
           DOCKER_REPO: 'docker-pypibuildtests-local'
           IMAGE_NAME: 'python-test-image-gh'
