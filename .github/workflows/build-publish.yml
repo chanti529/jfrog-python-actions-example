@@ -33,7 +33,7 @@ jobs:
            
             - name: configure jfrog environment
               run: |
-                jf pip-config --repo-resolve=python-virtual    
+                jf pip-config --repo-resolve=pypi-buildtests-remote
                 
             - name: configure environment
               run: |                      
