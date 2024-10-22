@@ -29,7 +29,6 @@ jobs:
                 JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
                 # Docker section start
                 #   JF_USER is used for basic authentication to docker repositories
-                ${{ vars.JF_URL }}
                 JF_USER: ${{ vars.JF_USER }}
                 # Docker section end
 
