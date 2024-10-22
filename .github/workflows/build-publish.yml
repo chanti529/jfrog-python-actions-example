@@ -31,22 +31,21 @@ jobs:
                   
             - name: Checkout the repository    
               uses: actions/checkout@v4
-              
            
-#            - name: configure jfrog environment
-#              run: |
-#                jf pip-config --repo-resolve=$RESOLVE_REPO
+            - name: configure jfrog environment
+              run: |
+                jf pip-config --repo-resolve=$RESOLVE_REPO
                 
             - name: configure environment
               run: |                      
-                python3 -m pip install --upgrade pip setuptools wheel sigstore
+                python3 -m pip install --upgrade pip setuptools wheel sigstore nltk
                 wheel -h
                 pip show setuptools
                 echo $VIRTUAL_ENV
                 
             - name: build project
               run: |                      
-                pip install -r requirements.txt  --module=jfrog-python-example
+                jf pip install -r requirements.txt  --module=jfrog-python-example
                 python setup.py sdist bdist_wheel
                 cd dist && echo "hashes=$(sha256sum * | base64 -w0)" >> $GITHUB_OUTPUT
 
