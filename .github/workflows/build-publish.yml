@@ -33,9 +33,9 @@ jobs:
               uses: actions/checkout@v4
               
            
-#            - name: configure jfrog environment
-#              run: |
-#                jf pip-config --repo-resolve=$RESOLVE_REPO
+            - name: configure jfrog environment
+              run: |
+                jf pip-config --repo-resolve=$RESOLVE_REPO
                 
             - name: configure environment
               run: |                      
