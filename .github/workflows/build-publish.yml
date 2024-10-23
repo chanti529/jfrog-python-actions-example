@@ -70,12 +70,12 @@ jobs:
                 password: ${{ secrets.JF_ACCESS_TOKEN }}
                 
             - name: Build Docker image    
-              uses: docker/build-push-action@v5
+              uses: docker/build-push-action@v6
               id: build
               with:
                 push: true
                 platforms: linux/amd64 #, linux/arm64
-                tags: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}                          
+                tags: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}:latest                          
             - name: docker scan
               run: |  
                  echo "${{ vars.JF_URL }}/${{ env.DOCKER_REPO}}/${{ env.IMAGE_NAME}}"
