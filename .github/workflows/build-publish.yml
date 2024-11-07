@@ -16,7 +16,7 @@ jobs:
           DOCKER_REPO: 'docker-pypibuildtests-local'
           IMAGE_NAME: 'python-test-image-gh'
         outputs:
-          image: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO}}/${{ env.IMAGE_NAME}}
+          image: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
           digest: ${{ steps.build.outputs.digest }}
         steps:
             # Download the JFrog CLI and configure using JFrog Project and OIDC provider 
@@ -78,14 +78,14 @@ jobs:
                 tags: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}:latest                          
             - name: docker scan
               run: |  
-                 echo "${{ vars.JF_URL }}/${{ env.DOCKER_REPO}}/${{ env.IMAGE_NAME}}"
-                 jf docker pull ${{ vars.JF_URL }}/${{ env.DOCKER_REPO}}/${{ env.IMAGE_NAME}}
-                 jf docker scan ${{ vars.JF_URL }}/${{ env.DOCKER_REPO}}/${{ env.IMAGE_NAME}}
+                 echo "${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}"
+                 jf docker pull ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
+                 jf docker scan ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}
 
             - name: add docker package to build
               run: |  
-                 echo "${{ vars.JF_URL }}/${{ env.DOCKER_REPO}}/${{ env.IMAGE_NAME}}@${{ steps.build.outputs.digest }}" > metadata.json
-                 jf rt build-docker-create ${{ env.DOCKER_REPO}} --image-file metadata.json 
+                 echo "${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}@${{ steps.build.outputs.digest }}" > metadata.json
+                 jf rt build-docker-create ${{ env.DOCKER_REPO }} --image-file metadata.json 
                  
             - name: publish build info
               run: |
