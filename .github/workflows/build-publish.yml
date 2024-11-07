@@ -75,7 +75,7 @@ jobs:
               with:
                 push: true
                 platforms: linux/amd64 #, linux/arm64
-                tags: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}:latest                          
+                tags: ${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}   
             - name: docker scan
               run: |  
                  echo "${{ vars.JF_URL }}/${{ env.DOCKER_REPO }}/${{ env.IMAGE_NAME }}"
