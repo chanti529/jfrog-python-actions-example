@@ -1,4 +1,5 @@
 PyYAML>3.11
+tensorflow
 nltk
 SQLAlchemy
 asteval==1.0.5
