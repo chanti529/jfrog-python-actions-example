@@ -10,5 +10,5 @@ setup(
     author_email='matthewam@jfrog.com',
     url='https://github.com/mambroziak/jfrog-python-actions-example',
     packages=['pythonExample'],
-    install_requires=['PyYAML>3.11', 'nltk'],
+    install_requires=['PyYAML>3.11', 'nltk','urllib3==1.26.18'],
 )
