@@ -22,8 +22,8 @@ jobs:
     build-publish-python:
         runs-on: ubuntu-latest
         env:
-          PLATFORM_REPO: 'pypi'
-          RESOLVE_REPO: 'pypi'
+          PLATFORM_REPO: 'test-pypi'
+          RESOLVE_REPO: 'test-pypi'
           DOCKER_REPO: 'dockerproxy'
           IMAGE_NAME: 'python-test-image-gh'
         outputs:
