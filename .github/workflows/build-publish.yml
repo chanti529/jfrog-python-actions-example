@@ -1,5 +1,16 @@
 name: Sample Python GitHub
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
 
 permissions:
   actions: read # for detecting the Github Actions environment.
