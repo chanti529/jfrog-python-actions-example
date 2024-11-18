@@ -40,7 +40,7 @@ jobs:
                 JF_PASSWORD: ${{ secrets.JF_PASSWORD }}
                 # Docker section start
                 #   JF_USER is used for basic authentication to docker repositories
-                JF_USER: ${{ vars.JF_USER }}
+                JF_USER: ${{ secrets.JF_USER }}
                 # Docker section end
 
               with:
@@ -77,8 +77,8 @@ jobs:
               uses: docker/login-action@v3
               with:
                 registry: ${{ vars.JF_URL }}
-                username: ${{ vars.JF_USER }}
-                password: ${{ secrets.JF_ACCESS_TOKEN }}
+                username: ${{ secrets.JF_USER }}
+                password: ${{ secrets.JF_PASSWORD }}
                 
             - name: Build Docker image    
               uses: docker/build-push-action@v6
@@ -110,5 +110,5 @@ jobs:
         digest: ${{ needs.build-publish-python.outputs.digest }}
         private-repository: true
       secrets:
-        registry-username: ${{ vars.JF_USER }}
-        registry-password: ${{ secrets.JF_ACCESS_TOKEN }}
+        registry-username: ${{ secrets.JF_USER }}
+        registry-password: ${{ secrets.JF_PASSWORD }}
