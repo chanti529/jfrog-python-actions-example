@@ -44,7 +44,11 @@ jobs:
                 # Docker section end
 
               with:
-                version: latest
+                version: 4.3.1
+            - run: |
+                jf --version
+                jf rt ping
+              
                   
             - name: Checkout the repository    
               uses: actions/checkout@v4
