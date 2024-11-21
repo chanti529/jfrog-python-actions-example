@@ -44,7 +44,7 @@ jobs:
                 # Docker section end
 
               with:
-                version: 4.3.1
+                version: latest
             - run: |
                 jf --version
                 jf rt ping
@@ -106,7 +106,7 @@ jobs:
                 
             - name: build scan
               run: |            
-                jf build-scan --fail=false
+                jf build-scan
             
     provenance:
       needs: [build-publish-python]
